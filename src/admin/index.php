@@ -56,8 +56,10 @@ if ($recent_bookings_result) {
     }
 }
 
-include 'includes/header.php';
-?>
+include 'includes/header.php'?>
+<div class="bg-gray-100">
+
+</div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
     <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -159,4 +161,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

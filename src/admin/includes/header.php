@@ -48,7 +48,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1">
+        <div class="flex flex-col gap-4 w-full p-4">
             <!-- Top Bar -->
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -58,11 +58,3 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
                     </div>
                 </div>
             </header>
-
-            <!-- Page Content -->
-            <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8"> </main>
-        </div>
-    </div>
-</body>
-
-</html>
