@@ -21,7 +21,7 @@ include 'includes/header.php';
 <div class="bg-gray-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div class="text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Welcome to Luxury Hotel</h1>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Welcome to Zaxch Hotel</h1>
             <p class="mt-4 text-xl text-gray-300">Experience the comfort and elegance of our premium accommodations</p>
             <div class="mt-8">
                 <a href="rooms.php" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-md">

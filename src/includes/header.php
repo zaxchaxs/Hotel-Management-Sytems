@@ -50,7 +50,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <!-- Navigation Links (Desktop) -->
                     <nav class="hidden md:ml-6 md:flex md:space-x-8">
                         <?php foreach ($navbarLinks as $key => $link): ?> 
-                            <a href="<?= $link['path'] ?>" class="<?php echo $currentPage === 'index.php' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="<?= $link['path'] ?>" class="<?php echo $currentPage == $link['filename'] ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 <?= $link['label']; ?>
                             </a>
                         <?php endforeach ?>

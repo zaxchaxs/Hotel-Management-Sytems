@@ -64,19 +64,23 @@ define('ROOT_NAME', '/hotel/src/');
 $navbarLinks = [
     'home' => [
         'label' => 'Home',
-        'path' => '/hotel/src/index.php'
+        'path' => '/hotel/src/index.php',
+        'filename' => 'index.php'
     ],
     'rooms' => [
         'label' => 'Rooms',
-        'path' => '/hotel/src/rooms.php'
+        'path' => '/hotel/src/rooms.php',
+        'filename' => 'rooms.php'
     ],
     'about' => [
         'label' => 'About',
-        'path' => '/hotel/src/about.php'
+        'path' => '/hotel/src/about.php',
+        'filename' => 'about.php'
     ],
     'contact' => [
         'label' => 'Contact',
-        'path' => '/hotel/src/contact.php'
+        'path' => '/hotel/src/contact.php',
+        'filename' => 'contact.php'
     ],
 ]
 ?>
