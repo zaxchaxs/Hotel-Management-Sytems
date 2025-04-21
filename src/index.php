@@ -58,7 +58,7 @@ include 'includes/header.php';
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php foreach ($featured_rooms as $room): ?>
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img src="<?= htmlspecialchars($room['image_url']) ?>" alt="Room <?= htmlspecialchars($room['room_number']) ?>" class="w-full h-48 object-cover">
+            <img src="<?=SITE_URL.htmlspecialchars($room['image_url']) ?>" alt="Room <?= htmlspecialchars($room['room_number']) ?>" class="w-full h-48 object-cover">
             <div class="p-6">
                 <h3 class="text-xl font-semibold"><?= htmlspecialchars($room['room_type']) ?> Room</h3>
                 <p class="text-gray-600">Room #<?= htmlspecialchars($room['room_number']) ?></p>
