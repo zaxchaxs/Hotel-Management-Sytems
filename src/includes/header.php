@@ -1,3 +1,4 @@
+<?php require_once 'config.php'; ?>
 <?php
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
@@ -41,25 +42,18 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <?php if (file_exists('assets/images/logo.png')): ?>
                                 <img src="assets/images/logo.png" alt="Hotel Logo" class="h-8 w-auto">
                             <?php else: ?>
-                                <span>Luxe Hotel</span>
+                                <span>Zaxch Hotel</span>
                             <?php endif; ?>
                         </a>
                     </div>
 
                     <!-- Navigation Links (Desktop) -->
                     <nav class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="index.php" class="<?php echo $currentPage === 'index.php' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Home
-                        </a>
-                        <a href="rooms.php" class="<?php echo $currentPage === 'rooms.php' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Rooms
-                        </a>
-                        <a href="about.php" class="<?php echo $currentPage === 'about.php' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            About
-                        </a>
-                        <a href="contact.php" class="<?php echo $currentPage === 'contact.php' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Contact
-                        </a>
+                        <?php foreach ($navbarLinks as $key => $link): ?> 
+                            <a href="<?= $link['path'] ?>" class="<?php echo $currentPage === 'index.php' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                <?= $link['label']; ?>
+                            </a>
+                        <?php endforeach ?>
                     </nav>
                 </div>
 
@@ -91,8 +85,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             </div>
                         </div>
                     <?php else: ?>
-                        <a href="auth/login.php" class="text-gray-500 hover:text-blue-500 px-3 py-2 text-sm font-medium">Login</a>
-                        <a href="auth/register.php" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium ml-2">Register</a>
+                        <a href="<?=ROOT_NAME.'auth/login.php' ?>" class="text-gray-500 hover:text-blue-500 px-3 py-2 text-sm font-medium">Login</a>
+                        <a href="<?=ROOT_NAME.'auth/register.php' ?>" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium ml-2">Register</a>
                     <?php endif; ?>
                 </div>
 
