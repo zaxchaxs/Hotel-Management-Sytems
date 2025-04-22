@@ -9,7 +9,7 @@ include 'includes/header.php';
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
         <div class="md:flex">
             <div class="md:w-1/2">
-                <img src="assets/images/hotel-exterior.jpg" alt="Hotel Exterior" class="w-full h-full object-cover">
+                <img src="assets/images/hotel.jpeg" alt="Hotel Exterior" class="w-full h-full object-cover">
             </div>
             <div class="p-6 md:w-1/2">
                 <h2 class="text-2xl font-semibold mb-4">Welcome to Luxury Stays</h2>
