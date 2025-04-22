@@ -41,7 +41,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
                 <a href="../index.php" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white mt-6">
                     View Website
                 </a>
-                <a href="../logout.php" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
+                <a href="../auth/logout.php" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
                     Logout
                 </a>
             </nav>

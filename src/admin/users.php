@@ -82,7 +82,7 @@ if ($users_result) {
 }
 
 // Include admin header
-include '../includes/admin_header.php';
+include 'includes/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
@@ -244,4 +244,4 @@ include '../includes/admin_header.php';
     <?php endif; ?>
 </div>
 
-<?php include '../includes/admin_footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

@@ -5,7 +5,7 @@ require_once '../includes/authentication.php';
 
 // Ensure user is logged in and is an admin or staff
 ensureLoggedIn();
-ensureAdminOrStaff();
+isAdmin();
 
 $errors = [];
 $success_message = '';
@@ -134,7 +134,7 @@ if ($bookings_result) {
 }
 
 // Include admin header
-include '../includes/admin_header.php';
+include 'includes/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
@@ -437,4 +437,4 @@ include '../includes/admin_header.php';
     </div>
 </div>
 
-<?php include '../includes/admin_footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
