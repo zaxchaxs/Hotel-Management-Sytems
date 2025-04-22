@@ -208,12 +208,6 @@ function getRoomStatusInfo($status) {
     }
 }
 
-/**
- * Get booking status text with color class
- * 
- * @param string $status Booking status
- * @return array Status text and color class
- */
 function getBookingStatusInfo($status) {
     switch ($status) {
         case 'pending':
