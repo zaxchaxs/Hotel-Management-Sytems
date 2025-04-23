@@ -1,9 +1,11 @@
 <?php
 require_once '../includes/config.php';
 require_once '../includes/db.php';
+require_once '../includes/functions.php';
 
 $pageTitle = 'Add New Room';
 $currentPage = 'rooms';
+$roomId = generateRoomID();
 
 $errors = [];
 $success = false;
@@ -145,7 +147,7 @@ include 'includes/header.php';
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Room Number *</label>
-                        <input type="text" name="room_number" value="<?= $success ? '' : htmlspecialchars($_POST['room_number'] ?? '') ?>"
+                        <input type="text" name="room_number" value="<?= $success ? '' : (isset($roomId) ? htmlspecialchars($roomId) : '') ?>"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
                     </div>
 
@@ -155,9 +157,7 @@ include 'includes/header.php';
                             <option value="">Select Room Type</option>
                             <option value="Standard" <?= isset($_POST['room_type']) && $_POST['room_type'] === 'Standard' ? 'selected' : '' ?>>Standard</option>
                             <option value="Deluxe" <?= isset($_POST['room_type']) && $_POST['room_type'] === 'Deluxe' ? 'selected' : '' ?>>Deluxe</option>
-                            <option value="Suite" <?= isset($_POST['room_type']) && $_POST['room_type'] === 'Suite' ? 'selected' : '' ?>>Suite</option>
                             <option value="Executive" <?= isset($_POST['room_type']) && $_POST['room_type'] === 'Executive' ? 'selected' : '' ?>>Executive</option>
-                            <option value="Penthouse" <?= isset($_POST['room_type']) && $_POST['room_type'] === 'Penthouse' ? 'selected' : '' ?>>Penthouse</option>
                         </select>
                     </div>
 

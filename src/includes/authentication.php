@@ -39,7 +39,7 @@ function ensureLoggedIn($redirect = '') {
  * @return boolean True if user is an admin, false otherwise
  */
 function isAdmin() {
-    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+    return isset($_SESSION['role']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'staff');
 }
 
 /**
