@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/config.php';
 require_once 'includes/db.php';
+require_once 'includes/functions.php';
 
 // Get featured rooms (for example, top 3 rooms)
 $featured_rooms_query = "SELECT * FROM rooms WHERE status = 'available' LIMIT 6";
@@ -64,7 +65,7 @@ include 'includes/header.php';
                 <p class="text-gray-600">Room #<?= htmlspecialchars($room['room_number']) ?></p>
                 <p class="mt-2 text-gray-500"><?= substr(htmlspecialchars($room['description']), 0, 100) ?>...</p>
                 <div class="mt-4 flex items-center justify-between">
-                    <span class="text-xl font-bold">$<?= htmlspecialchars($room['price_per_night']) ?><span class="text-sm font-normal"> / night</span></span>
+                    <span class="text-xl font-bold"><?= toRupiah($room['price_per_night']) ?><span class="text-sm font-normal"> / night</span></span>
                     <a href="booking.php?room_id=<?= $room['room_id'] ?>" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded">
                         Book Now
                     </a>

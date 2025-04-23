@@ -3,16 +3,21 @@
  * Utility functions for Hotel Management System
  */
 
-/**
- * Format a date according to the specified format
- * 
- * @param string $date Date string
- * @param string $format Format string (default: 'Y-m-d')
- * @return string Formatted date
- */
 function formatDate($date, $format = 'Y-m-d') {
     $timestamp = strtotime($date);
     return date($format, $timestamp);
+}
+
+function generateRoomID(){
+    global $conn;
+
+    $prefix = "ROOM";
+    $sql = "SELECT MAX(room_id) as max_id FROM rooms";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    $next_id = ($row['max_id'] ?? 0) + 1;
+    return $prefix . str_pad($next_id, 3, '0', STR_PAD_LEFT);
 }
 
 /**
@@ -93,17 +98,7 @@ function generateBookingReference() {
     return $prefix . $timestamp . $random;
 }
 
-/**
- * Upload a file
- * 
- * @param array $file File data from $_FILES
- * @param string $destination Destination directory
- * @param array $allowed_types Allowed MIME types
- * @param int $max_size Maximum file size in bytes
- * @return array Result with status and message/filename
- */
 function uploadFile($file, $destination = UPLOAD_DIR, $allowed_types = null, $max_size = null) {
-    // Set defaults if not provided
     if ($allowed_types === null) {
         $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
     }
@@ -159,15 +154,6 @@ function uploadFile($file, $destination = UPLOAD_DIR, $allowed_types = null, $ma
     }
 }
 
-/**
- * Check if a room is available for the given dates
- * 
- * @param int $room_id Room ID
- * @param string $check_in Check-in date
- * @param string $check_out Check-out date
- * @param int $exclude_booking_id Booking ID to exclude from check
- * @return bool True if room is available, false otherwise
- */
 function isRoomAvailable($room_id, $check_in, $check_out, $exclude_booking_id = 0) {
     global $conn;
     
@@ -189,12 +175,6 @@ function isRoomAvailable($room_id, $check_in, $check_out, $exclude_booking_id = 
     return $row['count'] == 0;
 }
 
-/**
- * Get room status text with color class
- * 
- * @param string $status Room status
- * @return array Status text and color class
- */
 function getRoomStatusInfo($status) {
     switch ($status) {
         case 'available':
@@ -225,12 +205,6 @@ function getBookingStatusInfo($status) {
     }
 }
 
-/**
- * Get payment status text with color class
- * 
- * @param string $status Payment status
- * @return array Status text and color class
- */
 function getPaymentStatusInfo($status) {
     switch ($status) {
         case 'pending':
@@ -246,16 +220,6 @@ function getPaymentStatusInfo($status) {
     }
 }
 
-/**
- * Send an email
- * 
- * @param string $to Recipient email
- * @param string $subject Email subject
- * @param string $message Email message
- * @param string $from_email From email (default: EMAIL_FROM)
- * @param string $from_name From name (default: EMAIL_NAME)
- * @return bool True on success, false on failure
- */
 function sendEmail($to, $subject, $message, $from_email = null, $from_name = null) {
     if ($from_email === null) {
         $from_email = EMAIL_FROM;
@@ -273,15 +237,6 @@ function sendEmail($to, $subject, $message, $from_email = null, $from_name = nul
     return mail($to, $subject, $message, $headers);
 }
 
-/**
- * Generate pagination links
- * 
- * @param int $total_items Total number of items
- * @param int $items_per_page Items per page
- * @param int $current_page Current page
- * @param string $url_pattern URL pattern with %d placeholder for page number
- * @return string HTML pagination links
- */
 function generatePagination($total_items, $items_per_page, $current_page, $url_pattern) {
     $total_pages = ceil($total_items / $items_per_page);
     
@@ -323,14 +278,6 @@ function generatePagination($total_items, $items_per_page, $current_page, $url_p
     return $html;
 }
 
-/**
- * Truncate a string to a specified length
- * 
- * @param string $string String to truncate
- * @param int $length Maximum length
- * @param string $append String to append if truncated
- * @return string Truncated string
- */
 function truncateString($string, $length = 100, $append = '...') {
     if (strlen($string) <= $length) {
         return $string;
@@ -342,12 +289,6 @@ function truncateString($string, $length = 100, $append = '...') {
     return $string . $append;
 }
 
-/**
- * Get current URL
- * 
- * @param bool $include_query_string Whether to include query string
- * @return string Current URL
- */
 function getCurrentUrl($include_query_string = true) {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
     $url = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -359,33 +300,15 @@ function getCurrentUrl($include_query_string = true) {
     return $url;
 }
 
-/**
- * Get current page name
- * 
- * @return string Current page name
- */
 function getCurrentPage() {
     return basename($_SERVER['PHP_SELF'], '.php');
 }
 
-/**
- * Validate a date format
- * 
- * @param string $date Date string
- * @param string $format Format string
- * @return bool True if valid, false otherwise
- */
 function validateDate($date, $format = 'Y-m-d') {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }
 
-/**
- * Create a slug from a string
- * 
- * @param string $string String to convert
- * @return string Slug
- */
 function createSlug($string) {
     $string = strtolower($string);
     $string = preg_replace('/[^a-z0-9\-]/', '-', $string);
@@ -394,26 +317,14 @@ function createSlug($string) {
     return $string;
 }
 
-/**
- * Get room types
- * 
- * @return array Room types
- */
 function getRoomTypes() {
     return [
         'Standard' => 'Standard Room',
         'Deluxe' => 'Deluxe Room',
-        'Suite' => 'Suite',
         'Executive' => 'Executive Room',
-        'Family' => 'Family Room'
     ];
 }
 
-/**
- * Get room amenities list
- * 
- * @return array Room amenities
- */
 function getRoomAmenities() {
     return [
         'wifi' => 'Free Wi-Fi',
@@ -429,11 +340,6 @@ function getRoomAmenities() {
     ];
 }
 
-/**
- * Get payment methods
- * 
- * @return array Payment methods
- */
 function getPaymentMethods() {
     return [
         'credit_card' => 'Credit Card',
@@ -444,14 +350,6 @@ function getPaymentMethods() {
     ];
 }
 
-/**
- * Log system activity
- * 
- * @param string $action Action performed
- * @param string $description Description of the activity
- * @param int $user_id User ID (default: current user)
- * @return bool True on success, false on failure
- */
 function logActivity($action, $description, $user_id = null) {
     global $conn;
     
@@ -473,12 +371,6 @@ function logActivity($action, $description, $user_id = null) {
     return $stmt->execute();
 }
 
-/**
- * Get user by ID
- * 
- * @param int $user_id User ID
- * @return array|null User data or null if not found
- */
 function getUserById($user_id) {
     global $conn;
     
@@ -495,13 +387,6 @@ function getUserById($user_id) {
     return null;
 }
 
-/**
- * Check if email exists
- * 
- * @param string $email Email to check
- * @param int $exclude_user_id User ID to exclude
- * @return bool True if email exists, false otherwise
- */
 function emailExists($email, $exclude_user_id = 0) {
     global $conn;
     
@@ -526,13 +411,6 @@ function emailExists($email, $exclude_user_id = 0) {
     return $row['count'] > 0;
 }
 
-/**
- * Check if username exists
- * 
- * @param string $username Username to check
- * @param int $exclude_user_id User ID to exclude
- * @return bool True if username exists, false otherwise
- */
 function usernameExists($username, $exclude_user_id = 0) {
     global $conn;
     
@@ -557,15 +435,6 @@ function usernameExists($username, $exclude_user_id = 0) {
     return $row['count'] > 0;
 }
 
-/**
- * Get available rooms for the given dates
- * 
- * @param string $check_in Check-in date
- * @param string $check_out Check-out date
- * @param string $room_type Room type (optional)
- * @param int $capacity Minimum capacity (optional)
- * @return array Available rooms
- */
 function getAvailableRooms($check_in, $check_out, $room_type = '', $capacity = 0) {
     global $conn;
     
@@ -604,12 +473,6 @@ function getAvailableRooms($check_in, $check_out, $room_type = '', $capacity = 0
     return $rooms;
 }
 
-/**
- * Generate a reset password token
- * 
- * @param int $user_id User ID
- * @return string|bool Reset token or false on failure
- */
 function generateResetToken($user_id) {
     global $conn;
     
@@ -627,12 +490,6 @@ function generateResetToken($user_id) {
     return false;
 }
 
-/**
- * Validate reset token
- * 
- * @param string $token Reset token
- * @return int|bool User ID or false if invalid
- */
 function validateResetToken($token) {
     global $conn;
     
@@ -831,4 +688,11 @@ function getDashboardStats() {
     
     return $stats;
 }
+
+function toRupiah($amount, $with_prefix = true) {
+    $formatted = number_format($amount, 0, ',', '.');
+    return $with_prefix ? 'Rp ' . $formatted : $formatted;
+}
+
 ?>
+

@@ -1,4 +1,5 @@
 <?php require_once 'config.php'; ?>
+<?php require_once 'authentication.php'; ?>
 <?php
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
@@ -6,10 +7,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Check if user is logged in
-$isLoggedIn = isset($_SESSION['user_id']);
-$isAdmin = $isLoggedIn && isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+$isLoggedIn = isLoggedIn();
+$isAdmin = isAdmin();
 
-// Get current page for active menu highlighting
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
@@ -22,9 +22,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../assets/styles/output.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">

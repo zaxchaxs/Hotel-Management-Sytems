@@ -32,17 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Message is required";
     }
     
-    // If no errors, process the form
     if (empty($errors)) {
-        // In a real application, you would:
-        // 1. Store the message in the database
-        // 2. Send an email notification
-        // 3. Possibly trigger other actions
-        
-        // For this example, we'll just set a success flag
+        // temporari aja
         $success = true;
-        
-        // Reset form fields after successful submission
         $name = $email = $subject = $message = '';
     }
 }
@@ -203,3 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
+</div>
+
+<?php include 'includes/footer.php'; ?>
