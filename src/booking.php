@@ -2,6 +2,7 @@
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/authentication.php';
+require_once 'includes/functions.php';
 
 // Ensure user is logged in
 ensureLoggedIn();
@@ -125,7 +126,7 @@ include 'includes/header.php';
                     <p><?= htmlspecialchars($room['amenities']) ?></p>
                 </div>
                 <div class="mt-4">
-                    <span class="text-2xl font-bold">$<?= htmlspecialchars($room['price_per_night']) ?></span>
+                    <span class="text-2xl font-bold"><?= toRupiah($room['price_per_night']) ?></span>
                     <span class="text-gray-600"> / night</span>
                 </div>
             </div>

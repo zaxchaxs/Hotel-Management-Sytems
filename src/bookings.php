@@ -2,6 +2,7 @@
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/authentication.php';
+require_once 'includes/functions.php';
 
 // Ensure user is logged in
 ensureLoggedIn();
@@ -94,7 +95,7 @@ include 'includes/header.php';
                                     <h2 class="text-xl font-semibold"><?= htmlspecialchars($booking['room_type']) ?> Room</h2>
                                     <p class="text-gray-600">Room #<?= htmlspecialchars($booking['room_number']) ?></p>
                                 </div>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <?= getStatusClasses($booking['booking_status']) ?>">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <?= getBookingStatusInfo($booking['booking_status'])['class'] ?>">
                                     <?= getStatusLabel($booking['booking_status']) ?>
                                 </span>
                             </div>
@@ -126,11 +127,11 @@ include 'includes/header.php';
                                 </div>
                                 <div>
                                     <span class="block text-sm text-gray-600">Price per Night</span>
-                                    <span class="font-medium">$<?= number_format($booking['price_per_night'], 2) ?></span>
+                                    <span class="font-medium"><?= toRupiah($booking['price_per_night'], 2) ?></span>
                                 </div>
                                 <div>
                                     <span class="block text-sm text-gray-600">Total Price</span>
-                                    <span class="font-bold">$<?= number_format($booking['total_price'], 2) ?></span>
+                                    <span class="font-bold"><?= toRupiah($booking['total_price'], 2) ?></span>
                                 </div>
                             </div>
                             
@@ -183,31 +184,6 @@ include 'includes/header.php';
 <?php
 // Helper Functions
 
-// Calculate number of nights between two dates
-function calculateNights($checkIn, $checkOut) {
-    $checkInDate = new DateTime($checkIn);
-    $checkOutDate = new DateTime($checkOut);
-    $interval = $checkInDate->diff($checkOutDate);
-    return $interval->days;
-}
-
-// Get CSS classes for status badges
-function getStatusClasses($status) {
-    switch($status) {
-        case 'pending':
-            return 'bg-yellow-100 text-yellow-800';
-        case 'confirmed':
-            return 'bg-green-100 text-green-800';
-        case 'checked_in':
-            return 'bg-blue-100 text-blue-800';
-        case 'checked_out':
-            return 'bg-gray-100 text-gray-800';
-        case 'cancelled':
-            return 'bg-red-100 text-red-800';
-        default:
-            return 'bg-gray-100 text-gray-800';
-    }
-}
 
 // Get human-readable status label
 function getStatusLabel($status) {

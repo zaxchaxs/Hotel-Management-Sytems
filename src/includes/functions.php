@@ -565,16 +565,13 @@ function getBookingById($booking_id) {
 function getUserBookings($user_id, $status = '') {
     global $conn;
     
-    $query = "SELECT b.*, r.room_number, r.room_type, r.price_per_night
-             FROM bookings b
-             JOIN rooms r ON b.room_id = r.room_id
-             WHERE b.user_id = ?";
+    $query = "SELECT b.*, r.room_number, r.room_type, r.image_url FROM bookings b JOIN rooms r ON b.room_id = r.room_id WHERE b.user_id = ? ORDER BY b.created_at DESC";
     
     if (!empty($status)) {
         $query .= " AND b.booking_status = ?";
     }
     
-    $query .= " ORDER BY b.created_at DESC";
+    // $query .= " ORDER BY b.created_at DESC";
     
     $stmt = $conn->prepare($query);
     

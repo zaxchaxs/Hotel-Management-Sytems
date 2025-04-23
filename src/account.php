@@ -2,31 +2,17 @@
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/authentication.php';
+require_once 'includes/functions.php';
 
-// Ensure user is logged in
 ensureLoggedIn();
 
 $user_id = $_SESSION['user_id'];
 
 // Get user information
-$user_query = "SELECT * FROM users WHERE user_id = $user_id";
-$user_result = $conn->query($user_query);
-$user = $user_result->fetch_assoc();
+$user = getUserById($user_id);
 
-// Get user's bookings
-$bookings_query = "SELECT b.*, r.room_number, r.room_type, r.image_url 
-                  FROM bookings b
-                  JOIN rooms r ON b.room_id = r.room_id
-                  WHERE b.user_id = $user_id
-                  ORDER BY b.created_at DESC";
-$bookings_result = $conn->query($bookings_query);
-$bookings = [];
-
-if ($bookings_result->num_rows > 0) {
-    while ($row = $bookings_result->fetch_assoc()) {
-        $bookings[] = $row;
-    }
-}
+$bookings = getUserBookings($user_id);
+echo "<script>console.log(" . json_encode($bookings) . ");</script>";
 
 // Handle profile update
 $profile_updated = false;
@@ -61,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     
     // Password change (optional)
     if (!empty($new_password)) {
-        // Verify current password
         if (empty($current_password)) {
             $profile_errors[] = "Current password is required to set a new password";
         } elseif (!password_verify($current_password, $user['password'])) {
@@ -110,12 +95,11 @@ include 'includes/header.php';
     <h1 class="text-3xl font-bold mb-6">My Account</h1>
     
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Sidebar -->
         <div class="md:col-span-1">
             <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
                 <div class="p-6">
                     <div class="text-center mb-4">
-                        <div class="inline-block w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-500">
+                        <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-500">
                             <?= strtoupper(substr($user['full_name'], 0, 1)) ?>
                         </div>
                         <h2 class="mt-2 text-xl font-semibold"><?= htmlspecialchars($user['full_name']) ?></h2>
@@ -223,7 +207,7 @@ include 'includes/header.php';
                                     <div class="w-full md:pl-4">
                                         <div class="flex flex-wrap justify-between mb-2">
                                             <h3 class="font-medium"><?= htmlspecialchars($booking['room_type']) ?> Room</h3>
-                                            <span class="text-sm <?= getBookingStatusInfo($booking['booking_status']) ?>">
+                                            <span class="text-sm <?= getBookingStatusInfo($booking['booking_status'])['class'] ?>">
                                                 <?= ucfirst(htmlspecialchars($booking['booking_status'])) ?>
                                             </span>
                                         </div>
@@ -243,7 +227,7 @@ include 'includes/header.php';
                                             </div>
                                             <div>
                                                 <span class="text-gray-600">Total:</span>
-                                                <span class="block font-medium">$<?= number_format($booking['total_price'], 2) ?></span>
+                                                <span class="block font-medium"><?= toRupiah($booking['total_price'], 2) ?></span>
                                             </div>
                                         </div>
                                         
@@ -255,8 +239,7 @@ include 'includes/header.php';
                                             </div>
                                         <?php elseif ($booking['booking_status'] === 'confirmed'): ?>
                                             <div class="mt-3">
-                                                <a href="cancel-booking.php?id=<?= $booking['booking_id'] ?>" class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-1 px-3 rounded" 
-                                                   onclick="return confirm('Are you sure you want to cancel this booking?');">
+                                                <a href="cancel-booking.php?id=<?= $booking['booking_id'] ?>" class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-1 px-3 rounded">
                                                     Cancel Booking
                                                 </a>
                                                 <a href="booking-details.php?id=<?= $booking['booking_id'] ?>" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-1 px-3 rounded">
@@ -294,24 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
         profileForm.style.display = 'block';
     <?php endif; ?>
 });
-
-// Helper function for status colors
-function getStatusColor(status) {
-    switch(status) {
-        case 'pending':
-            return 'text-yellow-600';
-        case 'confirmed':
-            return 'text-green-600';
-        case 'checked_in':
-            return 'text-blue-600';
-        case 'checked_out':
-            return 'text-gray-600';
-        case 'cancelled':
-            return 'text-red-600';
-        default:
-            return 'text-gray-600';
-    }
-}
 </script>
 
 <?php include 'includes/footer.php'; ?>
