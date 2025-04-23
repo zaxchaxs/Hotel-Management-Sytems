@@ -67,7 +67,7 @@ A complete web-based hotel management system built with PHP, MySQL, Express.js A
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/hotel-management-system.git
+   git clone https://github.com/zaxchaxs/Hotel-Management-Sytems.git
    cd hotel-management-system
    ```
 
