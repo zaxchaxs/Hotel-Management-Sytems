@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
                 <div class="p-6">
-                    <h2 class="text-2xl font-semibold mb-4">Get in Touch</h2>
+                    <h2 class="text-2xl font-semibold mb-4">Hubungi Kami</h2>
                     <p class="text-gray-700 mb-6">
-                        We'd love to hear from you! Whether you have questions about our accommodations, 
-                        want to make special arrangements for your stay, or have feedback to share, 
-                        our team is here to assist you.
+                        Kami senang mendengar dari Anda!
+                        Baik Anda memiliki pertanyaan seputar akomodasi kami, ingin membuat pengaturan khusus untuk masa inap Anda, 
+                        atau ingin menyampaikan masukan, tim kami siap membantu Anda dengan sepenuh hati.
                     </p>
                     
                     <div class="flex items-start mb-4">
@@ -62,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h3 class="font-semibold">Address</h3>
-                            <p class="text-gray-600">123 Luxury Avenue, Cityville, State 12345</p>
+                            <h3 class="font-semibold">Alamat</h3>
+                            <p class="text-gray-600">Jalan Triton No. 77, Pusat Kota Raya, Jawa Barat 12345</p>
                         </div>
                     </div>
                     
@@ -74,9 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h3 class="font-semibold">Phone</h3>
-                            <p class="text-gray-600">Reservations: +1 (555) 123-4567</p>
-                            <p class="text-gray-600">Front Desk: +1 (555) 123-4568</p>
+                            <h3 class="font-semibold">Telepon</h3>
+                            <p class="text-gray-600">Reservasi: (0267) 123-4567</p>
+                            <p class="text-gray-600">Meja Depan: (0267) 123-4568</p>
                         </div>
                     </div>
                     
@@ -88,8 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="ml-4">
                             <h3 class="font-semibold">Email</h3>
-                            <p class="text-gray-600">info@luxurystays.com</p>
-                            <p class="text-gray-600">reservations@luxurystays.com</p>
+                            <p class="text-gray-600">info@tritonhotel.com</p>
+                            <p class="text-gray-600">reservations@triton.com</p>
                         </div>
                     </div>
                     
@@ -100,9 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h3 class="font-semibold">Hours</h3>
-                            <p class="text-gray-600">Front Desk: 24/7</p>
-                            <p class="text-gray-600">Reservations: Mon-Fri 8AM - 8PM</p>
+                            <h3 class="font-semibold">Jam Kerja</h3>
+                            <p class="text-gray-600">Meja Depan: 24 jam</p>
+                            <p class="text-gray-600">Reservasi: Senin-Jumat 08.00-20.00 WIB</p>
                         </div>
                     </div>
                 </div>

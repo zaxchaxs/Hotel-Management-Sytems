@@ -39,7 +39,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <?php if (file_exists('assets/images/logo.png')): ?>
                                 <img src="assets/images/logo.png" alt="Hotel Logo" class="h-8 w-auto">
                             <?php else: ?>
-                                <span>Zaxch Hotel</span>
+                                <span>Triton Hotel</span>
                             <?php endif; ?>
                         </a>
                     </div>

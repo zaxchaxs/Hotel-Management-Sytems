@@ -3,8 +3,8 @@ require_once '../includes/config.php';
 require_once '../includes/authentication.php';
 
 // Ensure user is logged in and is an admin
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../login.php?redirect=admin');
+if (!isAdmin()) {
+    header('Location: ../index.php');
     exit;
 }
 ?>
