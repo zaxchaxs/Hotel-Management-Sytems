@@ -67,6 +67,8 @@ include 'includes/header.php';
                     <option value="Standard" <?= $room_type == 'Standard' ? 'selected' : '' ?>>Standard</option>
                     <option value="Deluxe" <?= $room_type == 'Deluxe' ? 'selected' : '' ?>>Deluxe</option>
                     <option value="Suite" <?= $room_type == 'Suite' ? 'selected' : '' ?>>Suite</option>
+                    <option value="Executive" <?= $room_type == 'Executive' ? 'selected' : '' ?>>Executive</option>
+                    <option value="Penthouse" <?= $room_type == 'penthouse' ? 'selected' : '' ?>>Penthouse</option>
                 </select>
             </div>
             <div>
@@ -108,8 +110,8 @@ include 'includes/header.php';
         
         <?php if (empty($rooms)): ?>
         <div class="col-span-full text-center py-8">
-            <p class="text-xl text-gray-600">No rooms available matching your criteria.</p>
-            <p class="mt-2">Try adjusting your search or dates.</p>
+            <p class="text-xl text-gray-600">Tidak ada kamar tersedia yang sesuai dengan kriteria Anda.</p>
+            <p class="mt-2">Coba sesuaikan penelusuran atau tanggal Anda.</p>
         </div>
         <?php endif; ?>
     </div>
