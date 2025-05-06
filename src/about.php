@@ -4,26 +4,29 @@ include 'includes/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-6 text-center">About Our Hotel</h1>
+    <h1 class="text-4xl font-bold mb-6 text-center">About Triton</h1>
     
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
         <div class="md:flex">
             <div class="md:w-1/2">
-                <img src="assets/images/hotel.jpeg" alt="Hotel Exterior" class="w-full h-full object-cover">
+                <img src="assets/images/hotel2.png" alt="Hotel Exterior" class="w-full h-full object-cover">
             </div>
             <div class="p-6 md:w-1/2">
-                <h2 class="text-2xl font-semibold mb-4">Welcome to Luxury Stays</h2>
+                <h2 class="text-2xl font-semibold mb-4">Welcome to Triton!</h2>
                 <p class="text-gray-700 mb-4">
-                    Established in 2010, Luxury Stays has been providing exceptional hospitality to guests from around the world. 
-                    Our commitment to excellence, attention to detail, and personalized service sets us apart in the hospitality industry.
+                    Didirikan pada tahun 2010, Triton hadir sebagai simbol keanggunan dan ketenangan dalam dunia perhotelan modern. 
+                    Dengan dedikasi terhadap kualitas, perhatian pada setiap detail, dan pelayanan yang dipersonalisasi, 
+                    kami berkomitmen untuk menghadirkan pengalaman menginap yang tak hanya nyaman, tetapi juga berkesan. 
+                    Setiap tamu kami adalah prioritas utama, dan setiap pengalaman menginap adalah cerminan dari standar tinggi yang kami pegang teguh.
                 </p>
                 <p class="text-gray-700 mb-4">
-                    Located in the heart of the city, our hotel offers easy access to major attractions, shopping centers, and business districts.
-                    Whether you're traveling for business or pleasure, we provide the perfect accommodations to meet your needs.
+                    Berlokasi strategis di jantung kota, Triton menawarkan kemudahan akses ke berbagai destinasi penting—mulai dari pusat bisnis, 
+                    area perbelanjaan, hingga tempat wisata ikonik. Baik Anda bepergian untuk urusan bisnis maupun liburan, 
+                    Triton menyediakan akomodasi yang dirancang dengan cermat untuk memenuhi kebutuhan dan gaya hidup Anda.
                 </p>
                 <p class="text-gray-700">
-                    We pride ourselves on creating a warm, welcoming environment where every guest feels at home,
-                    coupled with the luxury and amenities of a world-class hotel.
+                    Kami percaya bahwa kenyamanan sejati lahir dari perpaduan suasana yang hangat, desain elegan, dan layanan profesional. 
+                    Di Triton, Anda tidak hanya menginap—Anda merasakan ketenangan, kemewahan, dan kualitas yang dirancang untuk menciptakan pengalaman menginap yang istimewa.
                 </p>
             </div>
         </div>
@@ -74,47 +77,47 @@ include 'includes/header.php';
     </div>
     
     <div class="bg-gray-100 rounded-lg p-8 mb-12">
-        <h2 class="text-3xl font-bold text-center mb-8">Our Facilities</h2>
+        <h2 class="text-3xl font-bold text-center mb-8">Fasilitas yang Tersedia</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Swimming Pool</h3>
-                <p class="text-gray-600 text-sm">Enjoy our outdoor pool with temperature control for year-round swimming</p>
+                <h3 class="font-semibold mb-2">Kolam Renang</h3>
+                <p class="text-gray-600 text-sm">Nikmati kolam renang outdoor kami dengan kontrol suhu untuk berenang sepanjang tahun</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
                 <h3 class="font-semibold mb-2">Fitness Center</h3>
-                <p class="text-gray-600 text-sm">State-of-the-art equipment and professional trainers available</p>
+                <p class="text-gray-600 text-sm">Tersedia peralatan canggih dan pelatih profesional</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Spa & Wellness</h3>
-                <p class="text-gray-600 text-sm">Rejuvenate with our range of spa treatments and wellness services</p>
+                <h3 class="font-semibold mb-2">Spa & Kesehatan</h3>
+                <p class="text-gray-600 text-sm">Remajakan dirimu dengan rangkaian perawatan spa dan layanan kesehatan kami</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Business Center</h3>
-                <p class="text-gray-600 text-sm">Modern facilities for meetings and conferences with technical support</p>
+                <h3 class="font-semibold mb-2">Pusat Bisnis</h3>
+                <p class="text-gray-600 text-sm">Fasilitas modern untuk pertemuan dan konferensi dengan dukungan teknis</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Restaurant & Bar</h3>
-                <p class="text-gray-600 text-sm">Multiple dining options serving gourmet cuisine and specialty drinks</p>
+                <h3 class="font-semibold mb-2">Restoran & Bar</h3>
+                <p class="text-gray-600 text-sm">Beberapa pilihan bersantap yang menyajikan masakan gourmet dan minuman spesial</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Concierge Services</h3>
-                <p class="text-gray-600 text-sm">Personalized assistance for travel arrangements and local recommendations</p>
+                <h3 class="font-semibold mb-2">Layanan Concierge</h3>
+                <p class="text-gray-600 text-sm">Bantuan pribadi untuk pengaturan perjalanan dan rekomendasi lokal</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Laundry Services</h3>
-                <p class="text-gray-600 text-sm">Same-day laundry and dry cleaning for guests</p>
+                <h3 class="font-semibold mb-2">Layanan Laundry</h3>
+                <p class="text-gray-600 text-sm">Laundry dan dry cleaning di hari yang sama untuk tamu</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Free Wi-Fi</h3>
-                <p class="text-gray-600 text-sm">High-speed internet access throughout the property</p>
+                <h3 class="font-semibold mb-2">Wi-Fi Gratis</h3>
+                <p class="text-gray-600 text-sm">Akses internet berkecepatan tinggi di seluruh properti</p>
             </div>
         </div>
     </div>
