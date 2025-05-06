@@ -4,14 +4,13 @@ require_once 'includes/db.php';
 require_once 'includes/authentication.php';
 require_once 'includes/functions.php';
 
-// Ensure user is logged in
 ensureLoggedIn();
 
 $user_id = $_SESSION['user_id'];
 $errors = [];
 $booking = null;
 
-// Get booking ID from URL
+
 $booking_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($booking_id <= 0) {

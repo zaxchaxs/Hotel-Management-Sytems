@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     if (!empty($new_password)) {
         if (empty($current_password)) {
             $profile_errors[] = "Current password is required to set a new password";
-        } elseif (!password_verify($current_password, $user['password'])) {
+        } else if (!password_verify($current_password, $user['password'])) {
             $profile_errors[] = "Current password is incorrect";
         }
         
@@ -79,8 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         if ($conn->query($update_query)) {
             $profile_updated = true;
             // Refresh user data
-            $user_result = $conn->query($user_query);
-            $user = $user_result->fetch_assoc();
+            $user = getUserById($user_id);
         } else {
             $profile_errors[] = "Failed to update profile: " . $conn->error;
         }
@@ -110,7 +109,7 @@ include 'includes/header.php';
                         <button id="edit-profile-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded mb-3">
                             Edit Profile
                         </button>
-                        <a href="logout.php" class="block w-full text-center border border-gray-300 hover:bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded">
+                        <a href="auth/logout.php" class="block w-full text-center border border-gray-300 hover:bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded">
                             Logout
                         </a>
                     </div>
