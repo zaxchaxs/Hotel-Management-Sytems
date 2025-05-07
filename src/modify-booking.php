@@ -3,7 +3,6 @@ require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/authentication.php';
 
-// Ensure user is logged in
 ensureLoggedIn();
 
 $errors = [];
@@ -11,13 +10,11 @@ $success = false;
 $booking_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $user_id = $_SESSION['user_id'];
 
-// If booking_id is invalid, redirect to account page
 if ($booking_id <= 0) {
     header('Location: account.php');
     exit;
 }
 
-// Get booking details and ensure it belongs to the current user
 $booking_query = "SELECT b.*, r.room_id, r.room_number, r.room_type, r.capacity, r.price_per_night, r.image_url, r.status AS room_status
                  FROM bookings b
                  JOIN rooms r ON b.room_id = r.room_id
@@ -25,34 +22,28 @@ $booking_query = "SELECT b.*, r.room_id, r.room_number, r.room_type, r.capacity,
 $booking_result = $conn->query($booking_query);
 
 if ($booking_result->num_rows == 0) {
-    // Booking not found or doesn't belong to this user
     header('Location: account.php');
     exit;
 }
 
 $booking = $booking_result->fetch_assoc();
 
-// Only allow modification of confirmed bookings
 if ($booking['booking_status'] !== 'confirmed') {
     $_SESSION['error_message'] = "Only confirmed bookings can be modified.";
     header('Location: account.php');
     exit;
 }
 
-// Calculate original number of nights
 $check_in_date = new DateTime($booking['check_in_date']);
 $check_out_date = new DateTime($booking['check_out_date']);
 $nights = $check_in_date->diff($check_out_date)->days;
 
-// Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $new_check_in = $_POST['check_in'] ?? '';
     $new_check_out = $_POST['check_out'] ?? '';
     $new_adults = intval($_POST['adults'] ?? 1);
     $new_children = intval($_POST['children'] ?? 0);
     
-    // Validate dates
     if (empty($new_check_in)) {
         $errors[] = "Check-in date is required";
     }
@@ -61,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Check-out date is required";
     }
     
-    // Validate date format and ensure check-out is after check-in
     if (!empty($new_check_in) && !empty($new_check_out)) {
         $new_check_in_obj = new DateTime($new_check_in);
         $new_check_out_obj = new DateTime($new_check_out);
@@ -70,25 +60,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = "Check-out date must be after check-in date";
         }
         
-        // Check if the dates are in the future
         $now = new DateTime();
         if ($new_check_in_obj < $now) {
             $errors[] = "Check-in date must be in the future";
         }
         
-        // Calculate new number of nights
         $new_nights = $new_check_in_obj->diff($new_check_out_obj)->days;
         
-        // Calculate new total price
         $new_total_price = $booking['price_per_night'] * $new_nights;
     }
     
-    // Check capacity
     if ($new_adults + $new_children > $booking['capacity']) {
         $errors[] = "Total guests exceeds room capacity of " . $booking['capacity'];
     }
     
-    // Check if the room is available for the new dates (excluding the current booking)
     if (empty($errors)) {
         $availability_query = "SELECT * FROM bookings 
                              WHERE room_id = {$booking['room_id']} 
@@ -106,9 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // If no errors, update the booking
     if (empty($errors)) {
-        // Calculate price difference (for potential refund or additional charge)
         $price_difference = $new_total_price - $booking['total_price'];
         
         $update_query = "UPDATE bookings SET 
@@ -122,10 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($conn->query($update_query)) {
             $success = true;
             
-            // Record price adjustment if there's a difference
             if ($price_difference != 0) {
                 $transaction_id = 'ADJ' . time() . rand(100, 999);
-                $adjustment_status = $price_difference > 0 ? 'pending' : 'completed'; // If customer owes more, it's pending
+                $adjustment_status = $price_difference > 0 ? 'pending' : 'completed';
                 
                 $adjustment_query = "INSERT INTO payments (booking_id, amount, payment_method, transaction_id, status, notes) 
                                    VALUES ($booking_id, ABS($price_difference), 
@@ -134,13 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->query($adjustment_query);
             }
             
-            // Redirect to payment page if additional payment is needed
             if ($price_difference > 0) {
                 header("Location: payment.php?booking_id=$booking_id&adjustment=1");
                 exit;
             }
             
-            // Reload booking data
             $booking_result = $conn->query($booking_query);
             $booking = $booking_result->fetch_assoc();
         } else {
@@ -149,7 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
@@ -179,7 +158,6 @@ include 'includes/header.php';
         </div>
     <?php endif; ?>
     
-    <!-- Original Booking Details -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
         <div class="bg-gray-100 px-4 py-2">
             <h2 class="font-semibold">Current Booking Details</h2>
@@ -288,7 +266,6 @@ include 'includes/header.php';
         </div>
     </div>
     
-    <!-- Cancellation Policy -->
     <div class="mt-6 bg-yellow-50 p-4 rounded border border-yellow-200">
         <h3 class="font-medium text-yellow-800 mb-2">Modification Policy</h3>
         <ul class="list-disc list-inside text-sm text-yellow-800">

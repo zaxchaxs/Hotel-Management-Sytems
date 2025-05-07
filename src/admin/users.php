@@ -3,7 +3,6 @@ require_once '../includes/config.php';
 require_once '../includes/db.php';
 require_once '../includes/authentication.php';
 
-// Ensure user is logged in and is an admin
 ensureLoggedIn();
 ensureAdmin();
 
@@ -12,11 +11,9 @@ $success_message = '';
 
 // Process user action requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Delete user
     if (isset($_POST['delete_user'])) {
         $user_id = intval($_POST['user_id']);
         
-        // Check if user has any bookings
         $booking_check_query = "SELECT COUNT(*) AS booking_count FROM bookings WHERE user_id = $user_id";
         $booking_check_result = $conn->query($booking_check_query);
         $booking_count = $booking_check_result->fetch_assoc()['booking_count'];
@@ -33,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Update user role
     if (isset($_POST['update_role'])) {
         $user_id = intval($_POST['user_id']);
         $new_role = $_POST['role'];
@@ -51,12 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Pagination
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $per_page = 10;
 $offset = ($page - 1) * $per_page;
 
-// Search functionality
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $search_condition = '';
 if (!empty($search)) {
@@ -64,13 +58,11 @@ if (!empty($search)) {
     $search_condition = "WHERE username LIKE '%$search%' OR email LIKE '%$search%' OR full_name LIKE '%$search%'";
 }
 
-// Get total users count for pagination
 $count_query = "SELECT COUNT(*) as total FROM users $search_condition";
 $count_result = $conn->query($count_query);
 $total_users = $count_result->fetch_assoc()['total'];
 $total_pages = ceil($total_users / $per_page);
 
-// Get users
 $users_query = "SELECT * FROM users $search_condition ORDER BY user_id DESC LIMIT $offset, $per_page";
 $users_result = $conn->query($users_query);
 $users = [];
@@ -81,7 +73,6 @@ if ($users_result) {
     }
 }
 
-// Include admin header
 include 'includes/header.php';
 ?>
 

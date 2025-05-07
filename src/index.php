@@ -3,7 +3,6 @@ require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
-// Get featured rooms (for example, top 3 rooms)
 $featured_rooms_query = "SELECT * FROM rooms WHERE status = 'available' LIMIT 6";
 $featured_rooms_result = $conn->query($featured_rooms_query);
 $featured_rooms = [];
@@ -14,11 +13,9 @@ if ($featured_rooms_result && $featured_rooms_result->num_rows > 0) {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
-<!-- Hero Section -->
 <div class="bg-gray-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div class="text-center">
@@ -65,7 +62,7 @@ include 'includes/header.php';
                 <p class="text-gray-600">Room #<?= htmlspecialchars($room['room_number']) ?></p>
                 <p class="mt-2 text-gray-500"><?= substr(htmlspecialchars($room['description']), 0, 100) ?>...</p>
                 <div class="mt-4 flex items-center justify-between">
-                    <span class="text-xl font-bold"><?= toRupiah($room['price_per_night']) ?><span class="text-sm font-normal"> / night</span></span>
+                    <span class="text-xl font-bold"><?= formatCurrency($room['price_per_night']) ?><span class="text-sm font-normal"> / night</span></span>
                     <a href="booking.php?room_id=<?= $room['room_id'] ?>" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded">
                         Book Now
                     </a>
@@ -82,7 +79,6 @@ include 'includes/header.php';
     </div>
 </div>
 
-<!-- Features Section -->
 <div class="bg-gray-100 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-center mb-8">Why Choose Us</h2>
@@ -121,7 +117,6 @@ include 'includes/header.php';
     </div>
 </div>
 
-<!-- Testimonials Section -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h2 class="text-3xl font-bold text-center mb-8">What Our Guests Say</h2>
     
@@ -194,7 +189,6 @@ include 'includes/header.php';
     </div>
 </div>
 
-<!-- Newsletter Section -->
 <div class="bg-blue-600 text-white py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">

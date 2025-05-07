@@ -3,22 +3,18 @@ require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/authentication.php';
 
-// Ensure user is logged in
-// ensureLoggedIn();
+ensureLoggedIn();
 
 $errors = [];
 $success = false;
 
-// Get booking_id from query string
 $booking_id = isset($_GET['booking_id']) ? intval($_GET['booking_id']) : 0;
 
-// If booking_id is invalid, redirect to account page
 if ($booking_id <= 0) {
     header('Location: account.php');
     exit;
 }
 
-// Get booking details
 $booking_query = "SELECT b.*, r.room_number, r.room_type, r.price_per_night, r.image_url 
                  FROM bookings b
                  JOIN rooms r ON b.room_id = r.room_id
@@ -26,23 +22,19 @@ $booking_query = "SELECT b.*, r.room_number, r.room_type, r.price_per_night, r.i
 $booking_result = $conn->query($booking_query);
 
 if ($booking_result->num_rows == 0) {
-    // Booking not found or doesn't belong to this user
     header('Location: account.php');
     exit;
 }
 
 $booking = $booking_result->fetch_assoc();
 
-// Process payment form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $payment_method = $_POST['payment_method'] ?? '';
     $card_number = $_POST['card_number'] ?? '';
     $expiry_date = $_POST['expiry_date'] ?? '';
     $cvv = $_POST['cvv'] ?? '';
     $cardholder_name = $_POST['cardholder_name'] ?? '';
 
-    // Validate form data
     if (empty($payment_method)) {
         $errors[] = "Payment method is required";
     }
@@ -71,15 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // If no errors, process payment
     if (empty($errors)) {
-        // Generate a transaction ID
         $transaction_id = 'TXN' . time() . rand(100, 999);
 
-        // In a real system, you would integrate with a payment gateway here
-        // For this example, we'll simulate a successful payment
+        // Logic for payment, but for now just show succesful payment
 
-        // Create payment record
         $payment_query = "INSERT INTO payments (booking_id, amount, payment_method, transaction_id, status) 
                          VALUES ($booking_id, {$booking['total_price']}, '$payment_method', '$transaction_id', 'completed')";
 
@@ -95,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
@@ -111,7 +98,6 @@ include 'includes/header.php';
             </p>
         </div>
     <?php else: ?>
-        <!-- Booking Summary -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
             <div class="bg-gray-100 px-4 py-2">
                 <h2 class="font-semibold">Booking Summary</h2>
@@ -145,12 +131,10 @@ include 'includes/header.php';
             </div>
         </div>
 
-        <!-- Payment Form -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="p-6">
                 <h2 class="text-xl font-semibold mb-4">Payment Details</h2>
 
-                <!-- Display errors if any -->
                 <?php if (!empty($errors)): ?>
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                         <ul class="list-disc list-inside">

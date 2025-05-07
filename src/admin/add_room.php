@@ -10,9 +10,7 @@ $roomId = generateRoomID();
 $errors = [];
 $success = false;
 
-// Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $room_number = $_POST['room_number'] ?? '';
     $room_type = $_POST['room_type'] ?? '';
     $capacity = intval($_POST['capacity'] ?? 1);
@@ -24,20 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate form data
     if (isset($_FILES['room_image']) && $_FILES['room_image']['error'] === UPLOAD_ERR_OK) {
-        // Define upload directory
         $upload_dir = ROOT_NAME.'assets/images/rooms/';
         
-        // Create directory if it doesn't exist
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0755, true);
         }
         
-        // Get file info
         $file_name = $_FILES['room_image']['name'];
         $file_tmp = $_FILES['room_image']['tmp_name'];
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
         
-        // Check file extension
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
         if (!in_array($file_ext, $allowed_extensions)) {
             $errors[] = "Only JPG, JPEG, PNG, and GIF files are allowed.";

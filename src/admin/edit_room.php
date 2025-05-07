@@ -30,7 +30,6 @@ if ($room_result->num_rows == 0) {
 
 $room = $room_result->fetch_assoc();
 
-// Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
     $room_number = $_POST['room_number'] ?? '';
@@ -42,11 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image_url = $_POST['image_url'] ?? '';
     $status = $_POST['status'] ?? 'available';
     
-    // Validate form data
     if (empty($room_number)) {
         $errors[] = "Room number is required";
     } else {
-        // Check if room number already exists (excluding current room)
         $check_query = "SELECT room_id FROM rooms WHERE room_number = '$room_number' AND room_id != $room_id";
         $result = $conn->query($check_query);
         if ($result->num_rows > 0) {

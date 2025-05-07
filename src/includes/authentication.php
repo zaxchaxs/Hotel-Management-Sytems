@@ -1,29 +1,16 @@
 <?php require_once 'config.php'; ?>
 <?php
-/**
- * Authentication functions for Hotel Management System
- */
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-/**
- * Check if a user is logged in
- * 
- * @return boolean True if user is logged in, false otherwise
- */
+
 function isLoggedIn() {
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
-/**
- * Ensure that a user is logged in, redirect to login if not
- * 
- * @param string $redirect URL to redirect to after login
- * @return void
- */
 function ensureLoggedIn($redirect = '') {
     if (!isLoggedIn()) {
         // Store the current URL for redirection after login
@@ -33,35 +20,20 @@ function ensureLoggedIn($redirect = '') {
     }
 }
 
-/**
- * Check if the current user is an admin
- * 
- * @return boolean True if user is an admin, false otherwise
- */
+
 function isAdmin() {
     return isset($_SESSION['role']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'staff');
 }
 
-/**
- * Ensure that a user is an admin, redirect to home if not
- * 
- * @return void
- */
 function ensureAdmin() {
     if (!isLoggedIn() || !isAdmin()) {
         setFlashMessage('error', 'You do not have permission to access that page.');
-        header('Location: /index.php');
+        header('Location: '.ROOT_NAME.'/index.php');
         exit;
     }
 }
 
-/**
- * Authenticate a user with username/email and password
- * 
- * @param string $username_or_email Username or email
- * @param string $password Password
- * @return array|false User data if authenticated, false otherwise
- */
+
 function authenticateUser($username_or_email, $password) {
     global $conn;
     
@@ -75,7 +47,6 @@ function authenticateUser($username_or_email, $password) {
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
         
-        // Verify password
         if (password_verify($password, $user['password'])) {
             return $user;
         }
@@ -84,12 +55,6 @@ function authenticateUser($username_or_email, $password) {
     return false;
 }
 
-/**
- * Log in a user and set session variables
- * 
- * @param array $user User data
- * @return void
- */
 function loginUser($user) {
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['username'] = $user['username'];
@@ -103,26 +68,14 @@ function loginUser($user) {
     $conn->query("UPDATE users SET last_login = NOW() WHERE user_id = $user_id");
 }
 
-/**
- * Log out a user by destroying the session
- * 
- * @return void
- */
+
 function logoutUser() {
-    // Unset all session variables
     $_SESSION = array();
     
-    // Destroy the session
     session_destroy();
 }
 
-/**
- * Set a flash message to be displayed once
- * 
- * @param string $type Type of message (success, error, info, warning)
- * @param string $message Message content
- * @return void
- */
+
 function setFlashMessage($type, $message) {
     $_SESSION['flash_message'] = [
         'type' => $type,

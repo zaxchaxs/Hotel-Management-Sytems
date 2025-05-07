@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/config.php';
 require_once '../includes/db.php';
+require_once '../includes/functions.php';
 
 $pageTitle = 'Manage Rooms';
 $currentPage = 'rooms';
@@ -91,7 +92,7 @@ include 'includes/header.php';
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= htmlspecialchars($room['room_number']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= htmlspecialchars($room['room_type']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $room['capacity'] ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$<?= number_format($room['price_per_night'], 2) ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= formatCurrency($room['price_per_night'], 2) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                             <?php 

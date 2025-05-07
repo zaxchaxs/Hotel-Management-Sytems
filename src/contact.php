@@ -5,15 +5,12 @@ include 'includes/header.php';
 $success = false;
 $errors = [];
 
-// Process contact form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
     $subject = $_POST['subject'] ?? '';
     $message = $_POST['message'] ?? '';
     
-    // Validate form data
     if (empty($name)) {
         $errors[] = "Name is required";
     }

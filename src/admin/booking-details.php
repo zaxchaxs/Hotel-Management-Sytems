@@ -1,8 +1,8 @@
 <?php
-require_once 'includes/config.php';
-require_once 'includes/db.php';
-require_once 'includes/authentication.php';
-require_once 'includes/functions.php';
+require_once '../includes/config.php';
+require_once '../includes/db.php';
+require_once '../includes/authentication.php';
+require_once '../includes/functions.php';
 
 ensureLoggedIn();
 
@@ -18,7 +18,7 @@ if ($booking_id <= 0) {
     exit;
 }
 
-// Get booking details with room information
+// Get booking details with joins to get room information
 $booking_query = "SELECT b.*, 
                  r.room_number, r.room_type, r.price_per_night, r.capacity, r.amenities, r.description, r.image_url,
                  p.payment_id, p.payment_method, p.transaction_id, p.payment_date
@@ -30,37 +30,42 @@ $booking_query = "SELECT b.*,
 $result = $conn->query($booking_query);
 
 if ($result->num_rows === 0) {
+    // Booking not found or doesn't belong to this user
     header('Location: account.php');
     exit;
 }
 
 $booking = $result->fetch_assoc();
 
+// Calculate number of nights
 $check_in = new DateTime($booking['check_in_date']);
 $check_out = new DateTime($booking['check_out_date']);
 $interval = $check_in->diff($check_out);
 $nights = $interval->days;
 
+// Process cancellation request
 if (isset($_POST['cancel_booking']) && $booking['booking_status'] === 'confirmed') {
     $cancel_query = "UPDATE bookings SET booking_status = 'cancelled' WHERE booking_id = $booking_id AND user_id = $user_id";
     
     if ($conn->query($cancel_query)) {
+        // Refresh booking data
         $result = $conn->query($booking_query);
         $booking = $result->fetch_assoc();
         
+        // Add success message
         $cancellation_success = true;
     } else {
         $errors[] = "Failed to cancel booking. Please try again.";
     }
 }
 
+// Include header
 include 'includes/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-3xl font-bold">Booking Details</h1>
-        <a href="account.php" class="text-blue-500 hover:underline">← Back to My Bookings</a>
     </div>
     
     <?php if (!empty($errors)): ?>
@@ -161,7 +166,7 @@ include 'includes/header.php';
                             </div>
                             <div>
                                 <span class="text-gray-600">Amount Paid:</span>
-                                <span class="block font-medium"><?= formatCurrency($booking['total_price'], 2) ?></span>
+                                <span class="block font-medium">$<?= number_format($booking['total_price'], 2) ?></span>
                             </div>
                         </div>
                     </div>
@@ -186,77 +191,6 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    
-                    <?php if ($booking['booking_status'] === 'pending'): ?>
-                        <div class="mt-6">
-                            <a href="payment.php?booking_id=<?= $booking['booking_id'] ?>" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded">
-                                Complete Payment
-                            </a>
-                        </div>
-                    <?php elseif ($booking['booking_status'] === 'confirmed'): ?>
-                        <div class="mt-6">
-                            <form method="POST" class="inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
-                                <button type="submit" name="cancel_booking" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">
-                                    Cancel Booking
-                                </button>
-                            </form>
-                            
-                            <?php
-                            // Only show modification option if check-in date is at least 48 hours away
-                            $now = new DateTime();
-                            $diff = $now->diff($check_in);
-                            $hours_until_checkin = $diff->days * 24 + $diff->h;
-                            
-                            if ($hours_until_checkin >= 48):
-                            ?>
-                            <a href="modify-booking.php?id=<?= $booking['booking_id'] ?>" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
-                                Modify Booking
-                            </a>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="bg-gray-100 px-4 py-2">
-            <h2 class="font-semibold">Hotel Policies</h2>
-        </div>
-        <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="font-medium mb-2">Check-in & Check-out</h3>
-                    <ul class="text-sm space-y-1">
-                        <li>• Check-in time: 3:00 PM - 12:00 AM</li>
-                        <li>• Check-out time: 12:00 PM</li>
-                        <li>• Early check-in and late check-out available upon request (additional charges may apply)</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-medium mb-2">Cancellation Policy</h3>
-                    <ul class="text-sm space-y-1">
-                        <li>• Free cancellation up to 48 hours before check-in</li>
-                        <li>• Cancellations made within 48 hours of check-in are subject to a charge of one night's stay</li>
-                        <li>• No-shows are charged the full amount of the reservation</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-medium mb-2">Children & Extra Beds</h3>
-                    <ul class="text-sm space-y-1">
-                        <li>• Children of all ages are welcome</li>
-                        <li>• Children under 12 years stay free when using existing beds</li>
-                        <li>• Extra beds are available for an additional charge of $25 per night</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-medium mb-2">Additional Information</h3>
-                    <ul class="text-sm space-y-1">
-                        <li>• Pets are not allowed</li>
-                        <li>• The hotel is non-smoking throughout</li>
-                        <li>• WiFi is available in all areas at no extra charge</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -264,6 +198,7 @@ include 'includes/header.php';
 </div>
 
 <?php
+// Helper function for status badge classes
 function getStatusBadgeClass($status) {
     switch($status) {
         case 'pending':

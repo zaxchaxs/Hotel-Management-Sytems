@@ -294,7 +294,7 @@ include 'includes/header.php';
                                     </form>
                                     
                                     <!-- View Details Link -->
-                                    <a href="booking_details.php?id=<?= $booking['booking_id'] ?>" class="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded text-xs">
+                                    <a href="booking-details.php?id=<?= $booking['booking_id'] ?>" class="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded text-xs">
                                         Details
                                     </a>
                                     

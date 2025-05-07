@@ -1,12 +1,10 @@
 <?php require_once 'config.php'; ?>
 <?php require_once 'authentication.php'; ?>
 <?php
-// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Check if user is logged in
 $isLoggedIn = isLoggedIn();
 $isAdmin = isAdmin();
 
@@ -19,16 +17,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - ' : ''; ?>Hotel Management System</title>
-
-    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- Favicon -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
-    <!-- Header -->
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -44,7 +37,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         </a>
                     </div>
 
-                    <!-- Navigation Links (Desktop) -->
                     <nav class="hidden md:ml-6 md:flex md:space-x-8">
                         <?php foreach ($navbarLinks as $key => $link): ?> 
                             <a href="<?= $link['path'] ?>" class="<?php echo $currentPage == $link['filename'] ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
@@ -54,7 +46,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </nav>
                 </div>
 
-                <!-- User Account Links -->
                 <div class="hidden md:ml-6 md:flex md:items-center">
                     <?php if ($isLoggedIn): ?>
                         <div class="ml-3 relative" id="user-dropdown-container">
@@ -174,7 +165,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     dropdownMenu.classList.toggle('hidden');
                 });
 
-                // Close dropdown when clicking outside
                 document.addEventListener('click', function(event) {
                     const container = document.getElementById('user-dropdown-container');
                     if (container && !container.contains(event.target)) {

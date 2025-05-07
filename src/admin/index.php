@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/config.php';
 require_once '../includes/db.php';
+require_once '../includes/functions.php';
 
 $pageTitle = 'Dashboard';
 $currentPage = 'dashboard';
@@ -93,7 +94,7 @@ include 'includes/header.php'?>
         <div class="px-4 py-5 sm:p-6">
             <dl>
                 <dt class="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
-                <dd class="mt-1 text-3xl font-semibold text-gray-900">$<?= number_format($stats['revenue'], 2) ?></dd>
+                <dd class="mt-1 text-3xl font-semibold text-gray-900"><?= formatCurrency($stats['revenue'], 2) ?></dd>
             </dl>
         </div>
     </div>
@@ -150,8 +151,7 @@ include 'includes/header.php'?>
                                     <?= ucfirst($booking['booking_status']) ?>
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                $<?= number_format($booking['total_price'], 2) ?>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= formatCurrency($booking['total_price'], 2) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

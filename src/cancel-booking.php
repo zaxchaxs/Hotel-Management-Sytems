@@ -4,7 +4,6 @@ require_once 'includes/db.php';
 require_once 'includes/authentication.php';
 require_once 'includes/functions.php';
 
-// Ensure user is logged in
 ensureLoggedIn();
 
 $user_id = $_SESSION['user_id'];
@@ -12,7 +11,6 @@ $booking_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $error = '';
 $success = false;
 
-// Check if booking exists and belongs to current user
 if ($booking_id <= 0) {
     $error = "Invalid booking ID.";
 } else {
@@ -28,11 +26,9 @@ if ($booking_id <= 0) {
     } else {
         $booking = $booking_result->fetch_assoc();
         
-        // Check if booking can be cancelled
         if ($booking['booking_status'] !== 'confirmed' && $booking['booking_status'] !== 'pending') {
             $error = "This booking cannot be cancelled. Only confirmed or pending bookings can be cancelled.";
         } else {
-            // Calculate cancellation fee based on hotel policy
             $today = new DateTime();
             $check_in = new DateTime($booking['check_in_date']);
             $days_until_checkin = $today->diff($check_in)->days;
@@ -42,9 +38,11 @@ if ($booking_id <= 0) {
             $cancellation_policy = "";
             
             // Implement cancellation policy
-            // - Free cancellation 7 or more days before check-in
+            // Criteria
+            // - Free cancel if 7 or more days before check-in
             // - 50% fee if cancelled between 3-7 days before check-in
             // - 100% fee if cancelled less than 3 days before check-in
+
             if ($days_until_checkin >= 7) {
                 $cancellation_fee = 0;
                 $refund_amount = $booking['total_price'];
@@ -59,20 +57,19 @@ if ($booking_id <= 0) {
                 $cancellation_policy = "A 100% cancellation fee applies as you're cancelling less than 3 days before check-in.";
             }
             
-            // Process cancellation if form is submitted
+            // cancell if form is submitted
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Start transaction
                 $conn->begin_transaction();
                 
                 try {
-                    // Update booking status to cancelled
                     $update_booking_query = "UPDATE bookings SET booking_status = 'cancelled' WHERE booking_id = $booking_id";
                     $conn->query($update_booking_query);
                     
                     // If there was a payment, process refund
                     if (!empty($booking['payment_id']) && $refund_amount > 0) {
-                        // In a real system, you would integrate with payment gateway for refund
-                        // For this example, we'll create a refund record
+
+                        // for now this example, maybe using payment gateway in production
                         $refund_transaction_id = 'REF' . time() . rand(100, 999);
                         
                         $refund_query = "INSERT INTO payments (booking_id, amount, payment_method, transaction_id, status) 
@@ -80,15 +77,12 @@ if ($booking_id <= 0) {
                         $conn->query($refund_query);
                     }
                     
-                    // Make room available again
                     $update_room_query = "UPDATE rooms SET status = 'available' WHERE room_id = {$booking['room_id']}";
                     $conn->query($update_room_query);
                     
-                    // Commit transaction
                     $conn->commit();
                     $success = true;
                 } catch (Exception $e) {
-                    // Rollback transaction on error
                     $conn->rollback();
                     $error = "Failed to cancel booking: " . $e->getMessage();
                 }
@@ -97,7 +91,6 @@ if ($booking_id <= 0) {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
@@ -118,7 +111,7 @@ include 'includes/header.php';
             <p class="font-bold">Booking Cancelled Successfully</p>
             <p>Your booking has been cancelled and your room is now available for other guests.</p>
             <?php if ($refund_amount > 0): ?>
-                <p class="mt-2">A refund of <?= toRupiah($refund_amount, 2) ?> has been processed and will be credited to your original payment method within 5-7 business days.</p>
+                <p class="mt-2">A refund of <?= formatCurrency($refund_amount, 2) ?> has been processed and will be credited to your original payment method within 5-7 business days.</p>
             <?php endif; ?>
         </div>
         <div class="mt-4">
@@ -151,7 +144,7 @@ include 'includes/header.php';
                     </div>
                     <div>
                         <p class="text-sm text-gray-600">Total Price</p>
-                        <p class="font-medium"><?= toRupiah($booking['total_price'], 2) ?></p>
+                        <p class="font-medium"><?= formatCurrency($booking['total_price'], 2) ?></p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600">Status</p>
@@ -187,13 +180,13 @@ include 'includes/header.php';
                     <h3 class="font-medium mb-2">Cancellation Summary:</h3>
                     <div class="grid grid-cols-2 gap-2 mb-4">
                         <div class="text-sm text-gray-600">Total Paid:</div>
-                        <div class="text-sm font-medium"><?= toRupiah($booking['total_price'], 2) ?></div>
+                        <div class="text-sm font-medium"><?= formatCurrency($booking['total_price'], 2) ?></div>
                         
                         <div class="text-sm text-gray-600">Cancellation Fee:</div>
-                        <div class="text-sm font-medium"><?= toRupiah($cancellation_fee, 2) ?></div>
+                        <div class="text-sm font-medium"><?= formatCurrency($cancellation_fee, 2) ?></div>
                         
                         <div class="text-sm text-gray-600">Refund Amount:</div>
-                        <div class="text-sm font-medium"><?= toRupiah($refund_amount, 2) ?></div>
+                        <div class="text-sm font-medium"><?= formatCurrency($refund_amount, 2) ?></div>
                     </div>
                 </div>
                 

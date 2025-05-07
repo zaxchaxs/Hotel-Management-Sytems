@@ -8,13 +8,11 @@ ensureLoggedIn();
 
 $user_id = $_SESSION['user_id'];
 
-// Get user information
 $user = getUserById($user_id);
 
 $bookings = getUserBookings($user_id);
 echo "<script>console.log(" . json_encode($bookings) . ");</script>";
 
-// Handle profile update
 $profile_updated = false;
 $profile_errors = [];
 
@@ -25,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
     
-    // Validate inputs
     if (empty($full_name)) {
         $profile_errors[] = "Full name is required";
     }
@@ -64,11 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         }
     }
     
-    // Update profile if no errors
     if (empty($profile_errors)) {
         $update_query = "UPDATE users SET full_name = '$full_name', email = '$email'";
         
-        // Add password update if provided
         if (!empty($new_password)) {
             $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
             $update_query .= ", password = '$hashed_password'";
@@ -78,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         
         if ($conn->query($update_query)) {
             $profile_updated = true;
-            // Refresh user data
             $user = getUserById($user_id);
         } else {
             $profile_errors[] = "Failed to update profile: " . $conn->error;
@@ -86,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
@@ -117,9 +110,7 @@ include 'includes/header.php';
             </div>
         </div>
         
-        <!-- Main Content -->
         <div class="md:col-span-2">
-            <!-- Profile Edit Form (Initially Hidden) -->
             <div id="profile-form" class="bg-white rounded-lg shadow-md overflow-hidden mb-6" style="display: none;">
                 <div class="bg-gray-100 px-4 py-2">
                     <h2 class="font-semibold">Edit Profile</h2>
@@ -186,7 +177,6 @@ include 'includes/header.php';
                 </div>
             </div>
             
-            <!-- Bookings List -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="bg-gray-100 px-4 py-2">
                     <h2 class="font-semibold">My Bookings</h2>
@@ -226,7 +216,7 @@ include 'includes/header.php';
                                             </div>
                                             <div>
                                                 <span class="text-gray-600">Total:</span>
-                                                <span class="block font-medium"><?= toRupiah($booking['total_price'], 2) ?></span>
+                                                <span class="block font-medium"><?= formatCurrency($booking['total_price'], 2) ?></span>
                                             </div>
                                         </div>
                                         

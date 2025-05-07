@@ -4,46 +4,37 @@ require_once 'includes/db.php';
 require_once 'includes/authentication.php';
 require_once 'includes/functions.php';
 
-// Ensure user is logged in
 ensureLoggedIn();
 
 $errors = [];
 $success = false;
 
-// Get room_id from query string
 $room_id = isset($_GET['room_id']) ? intval($_GET['room_id']) : 0;
 
-// Get check-in and check-out dates from query string
 $check_in = $_GET['check_in'] ?? '';
 $check_out = $_GET['check_out'] ?? '';
 
-// If room_id is invalid, redirect to rooms page
 if ($room_id <= 0) {
     header('Location: rooms.php');
     exit;
 }
 
-// Get room details
 $room_query = "SELECT * FROM rooms WHERE room_id = $room_id AND status = 'available'";
 $room_result = $conn->query($room_query);
 
 if ($room_result->num_rows == 0) {
-    // Room not found or not available
     header('Location: rooms.php');
     exit;
 }
 
 $room = $room_result->fetch_assoc();
 
-// Process booking form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $check_in_date = $_POST['check_in'] ?? '';
     $check_out_date = $_POST['check_out'] ?? '';
     $adults = intval($_POST['adults'] ?? 1);
     $children = intval($_POST['children'] ?? 0);
     
-    // Validate form data
     if (empty($check_in_date)) {
         $errors[] = "Check-in date is required";
     }
@@ -52,12 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Check-out date is required";
     }
     
-    // Ensure check-out date is after check-in date
     if (!empty($check_in_date) && !empty($check_out_date) && strtotime($check_out_date) <= strtotime($check_in_date)) {
         $errors[] = "Check-out date must be after check-in date";
     }
     
-    // Calculate number of nights
     $nights = 0;
     if (!empty($check_in_date) && !empty($check_out_date)) {
         $check_in_obj = new DateTime($check_in_date);
@@ -66,10 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nights = $interval->days;
     }
     
-    // Calculate total price
     $total_price = $room['price_per_night'] * $nights;
     
-    // Check if room is available for selected dates
     if (empty($errors)) {
         $availability_query = "SELECT * FROM bookings 
                              WHERE room_id = $room_id 
@@ -86,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // If no errors, create booking
     if (empty($errors)) {
         $user_id = $_SESSION['user_id'];
         
@@ -104,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
@@ -126,7 +111,7 @@ include 'includes/header.php';
                     <p><?= htmlspecialchars($room['amenities']) ?></p>
                 </div>
                 <div class="mt-4">
-                    <span class="text-2xl font-bold"><?= toRupiah($room['price_per_night']) ?></span>
+                    <span class="text-2xl font-bold"><?= formatCurrency($room['price_per_night']) ?></span>
                     <span class="text-gray-600"> / night</span>
                 </div>
             </div>
@@ -138,7 +123,7 @@ include 'includes/header.php';
         <div class="p-6">
             <h2 class="text-xl font-semibold mb-4">Booking Details</h2>
             
-            <!-- Display errors if any -->
+            <!-- Display errors -->
             <?php if (!empty($errors)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                     <ul class="list-disc list-inside">
@@ -223,7 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
     checkInInput.addEventListener('change', calculateTotal);
     checkOutInput.addEventListener('change', calculateTotal);
     
-    // Calculate initial total if dates are pre-filled
     calculateTotal();
 });
 </script>

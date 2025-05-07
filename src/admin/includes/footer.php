@@ -3,9 +3,7 @@
 
 </div>
 </div>
-<!-- End of main content container -->
 
-<!-- Footer -->
 <footer class="bg-gray-800 text-white mt-auto">
     <div class="container mx-auto px-4 py-6">
         <div class="flex justify-end items-center">
@@ -25,9 +23,7 @@
     </div>
 </footer>
 
-<!-- JavaScript -->
 <script>
-    // Toggle mobile menu
     document.addEventListener('DOMContentLoaded', function() {
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -38,7 +34,7 @@
             });
         }
 
-        // Add current page highlighting
+        // current page highlighting
         const currentPath = window.location.pathname;
         const filename = currentPath.substring(currentPath.lastIndexOf('/') + 1);
 
@@ -51,13 +47,11 @@
         });
     });
 
-    // Confirmation for delete actions
     function confirmDelete(itemType, itemId) {
         return confirm(`Are you sure you want to delete this ${itemType}? This action cannot be undone.`);
     }
 </script>
 
-<!-- Additional Scripts -->
 <?php if (isset($page_scripts)): ?>
     <?php foreach ($page_scripts as $script): ?>
         <script src="<?php echo htmlspecialchars($script); ?>"></script>

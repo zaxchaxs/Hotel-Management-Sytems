@@ -3,10 +3,7 @@ require_once '../includes/config.php';
 require_once '../includes/authentication.php';
 
 // Ensure user is logged in and is an admin
-if (!isAdmin()) {
-    header('Location: ../index.php');
-    exit;
-}
+ensureAdmin();
 ?>
 <!DOCTYPE html>
 <html lang="en">

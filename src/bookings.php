@@ -4,19 +4,17 @@ require_once 'includes/db.php';
 require_once 'includes/authentication.php';
 require_once 'includes/functions.php';
 
-// Ensure user is logged in
 ensureLoggedIn();
 
 $user_id = $_SESSION['user_id'];
 
-// Check if a filter is applied
+// Check filter
 $status_filter = isset($_GET['status']) ? $_GET['status'] : '';
 $valid_statuses = ['all', 'pending', 'confirmed', 'checked_in', 'checked_out', 'cancelled'];
 if (!in_array($status_filter, $valid_statuses)) {
     $status_filter = 'all';
 }
 
-// Get bookings with optional filter
 $bookings_query = "SELECT b.*, r.room_number, r.room_type, r.price_per_night, r.image_url 
                   FROM bookings b
                   JOIN rooms r ON b.room_id = r.room_id
@@ -36,14 +34,13 @@ if ($bookings_result->num_rows > 0) {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-6">My Bookings</h1>
     
-    <!-- Filter tabs -->
+    <!-- Filter -->
     <div class="mb-6 border-b border-gray-200">
         <nav class="flex flex-wrap -mb-px">
             <a href="bookings.php?status=all" 
@@ -127,15 +124,15 @@ include 'includes/header.php';
                                 </div>
                                 <div>
                                     <span class="block text-sm text-gray-600">Price per Night</span>
-                                    <span class="font-medium"><?= toRupiah($booking['price_per_night'], 2) ?></span>
+                                    <span class="font-medium"><?= formatCurrency($booking['price_per_night'], 2) ?></span>
                                 </div>
                                 <div>
                                     <span class="block text-sm text-gray-600">Total Price</span>
-                                    <span class="font-bold"><?= toRupiah($booking['total_price'], 2) ?></span>
+                                    <span class="font-bold"><?= formatCurrency($booking['total_price'], 2) ?></span>
                                 </div>
                             </div>
                             
-                            <!-- Action buttons based on booking status -->
+                            <!-- Action buttons -->
                             <div class="flex flex-wrap items-center justify-between">
                                 <div class="text-sm text-gray-500">
                                     <?= getBookingMessage($booking['booking_status'], $booking['check_in_date']) ?>
@@ -182,10 +179,7 @@ include 'includes/header.php';
 </div>
 
 <?php
-// Helper Functions
 
-
-// Get human-readable status label
 function getStatusLabel($status) {
     switch($status) {
         case 'pending':
@@ -203,17 +197,14 @@ function getStatusLabel($status) {
     }
 }
 
-// Check if booking can still be cancelled (e.g., more than 48 hours before check-in)
 function isWithinCancellationPeriod($checkInDate) {
     $now = new DateTime();
     $checkIn = new DateTime($checkInDate);
     $interval = $now->diff($checkIn);
     
-    // Allow cancellation if more than 48 hours before check-in
     return ($interval->days > 2 || ($interval->days == 2 && $interval->h > 0));
 }
 
-// Get message based on booking status
 function getBookingMessage($status, $checkInDate) {
     switch($status) {
         case 'pending':
@@ -236,7 +227,6 @@ function getBookingMessage($status, $checkInDate) {
     }
 }
 
-// Calculate days until check-in
 function daysUntilCheckIn($checkInDate) {
     $now = new DateTime();
     $checkIn = new DateTime($checkInDate);

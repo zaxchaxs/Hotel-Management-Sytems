@@ -1,7 +1,5 @@
 <?php
-/**
- * Utility functions for Hotel Management System
- */
+// Utility functions
 
 function formatDate($date, $format = 'Y-m-d') {
     $timestamp = strtotime($date);
@@ -10,7 +8,6 @@ function formatDate($date, $format = 'Y-m-d') {
 
 function generateRoomID(){
     global $conn;
-
     $prefix = "ROOM";
     $sql = "SELECT MAX(room_id) as max_id FROM rooms";
     $result = mysqli_query($conn, $sql);
@@ -20,28 +17,14 @@ function generateRoomID(){
     return $prefix . str_pad($next_id, 3, '0', STR_PAD_LEFT);
 }
 
-/**
- * Format currency amount
- * 
- * @param float $amount Amount to format
- * @param string $currency Currency code (default: PAYMENT_CURRENCY)
- * @return string Formatted amount
- */
 function formatCurrency($amount, $currency = null) {
     if ($currency === null) {
         $currency = PAYMENT_CURRENCY;
     }
     
-    return '$' . number_format($amount, 2);
+    return 'Rp. ' . number_format($amount, 2);
 }
 
-/**
- * Calculate number of nights between two dates
- * 
- * @param string $check_in Check-in date
- * @param string $check_out Check-out date
- * @return int Number of nights
- */
 function calculateNights($check_in, $check_out) {
     $check_in_obj = new DateTime($check_in);
     $check_out_obj = new DateTime($check_out);
@@ -49,15 +32,6 @@ function calculateNights($check_in, $check_out) {
     return $interval->days;
 }
 
-/**
- * Calculate total price for a booking
- * 
- * @param float $price_per_night Price per night
- * @param int $nights Number of nights
- * @param float $extras Additional charges
- * @param bool $include_tax Whether to include tax
- * @return float Total price
- */
 function calculateTotalPrice($price_per_night, $nights, $extras = 0, $include_tax = true) {
     $subtotal = ($price_per_night * $nights) + $extras;
     
@@ -68,12 +42,6 @@ function calculateTotalPrice($price_per_night, $nights, $extras = 0, $include_ta
     return $subtotal;
 }
 
-/**
- * Generate a random string
- * 
- * @param int $length Length of the string
- * @return string Random string
- */
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $string = '';
@@ -85,11 +53,6 @@ function generateRandomString($length = 10) {
     return $string;
 }
 
-/**
- * Generate a unique booking reference
- * 
- * @return string Booking reference
- */
 function generateBookingReference() {
     $prefix = 'BK';
     $timestamp = time();
@@ -107,7 +70,6 @@ function uploadFile($file, $destination = UPLOAD_DIR, $allowed_types = null, $ma
         $max_size = MAX_FILE_SIZE;
     }
     
-    // Check if file was uploaded successfully
     if ($file['error'] !== UPLOAD_ERR_OK) {
         $error_messages = [
             UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
@@ -254,7 +216,7 @@ function generatePagination($total_items, $items_per_page, $current_page, $url_p
         $html .= '<span class="px-4 py-2 text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">Previous</span>';
     }
     
-    // Page numbers
+    // Page number
     $range = 2;
     for ($i = max(1, $current_page - $range); $i <= min($total_pages, $current_page + $range); $i++) {
         if ($i == $current_page) {
@@ -448,7 +410,6 @@ function getAvailableRooms($check_in, $check_out, $room_type = '', $capacity = 0
         $query .= " AND capacity >= $capacity";
     }
     
-    // Exclude rooms that are booked for the given dates
     if (!empty($check_in) && !empty($check_out)) {
         $query .= " AND room_id NOT IN (
             SELECT room_id FROM bookings 
@@ -507,12 +468,6 @@ function validateResetToken($token) {
     return false;
 }
 
-/**
- * Get room details by ID
- * 
- * @param int $room_id Room ID
- * @return array|null Room data or null if not found
- */
 function getRoomById($room_id) {
     global $conn;
     
@@ -529,12 +484,6 @@ function getRoomById($room_id) {
     return null;
 }
 
-/**
- * Get booking by ID
- * 
- * @param int $booking_id Booking ID
- * @return array|null Booking data or null if not found
- */
 function getBookingById($booking_id) {
     global $conn;
     
@@ -555,13 +504,6 @@ function getBookingById($booking_id) {
     return null;
 }
 
-/**
- * Get bookings for a user
- * 
- * @param int $user_id User ID
- * @param string $status Booking status (optional)
- * @return array Bookings
- */
 function getUserBookings($user_id, $status = '') {
     global $conn;
     
@@ -594,13 +536,6 @@ function getUserBookings($user_id, $status = '') {
     return $bookings;
 }
 
-/**
- * Cancel a booking
- * 
- * @param int $booking_id Booking ID
- * @param int $user_id User ID
- * @return bool True on success, false on failure
- */
 function cancelBooking($booking_id, $user_id) {
     global $conn;
     
@@ -613,11 +548,6 @@ function cancelBooking($booking_id, $user_id) {
     return $stmt->affected_rows > 0;
 }
 
-/**
- * Get dashboard statistics
- * 
- * @return array Statistics
- */
 function getDashboardStats() {
     global $conn;
     
@@ -684,11 +614,6 @@ function getDashboardStats() {
     }
     
     return $stats;
-}
-
-function toRupiah($amount, $with_prefix = true) {
-    $formatted = number_format($amount, 0, ',', '.');
-    return $with_prefix ? 'Rp ' . $formatted : $formatted;
 }
 
 ?>

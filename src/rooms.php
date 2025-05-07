@@ -9,7 +9,7 @@ $check_out = $_GET['check_out'] ?? '';
 $room_type = $_GET['room_type'] ?? '';
 $capacity = $_GET['capacity'] ?? '';
 
-// Build query based on filters
+// query on filters
 $query = "SELECT * FROM rooms WHERE status = 'available'";
 
 if (!empty($room_type)) {
@@ -20,7 +20,6 @@ if (!empty($capacity)) {
     $query .= " AND capacity >= $capacity";
 }
 
-// If dates are provided, exclude rooms that are booked for those dates
 if (!empty($check_in) && !empty($check_out)) {
     $query .= " AND room_id NOT IN (
         SELECT room_id FROM bookings 
@@ -42,14 +41,13 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Include header
 include 'includes/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-6">Available Rooms</h1>
     
-    <!-- Search/Filter Form -->
+    <!-- Ini search form -->
     <form class="bg-gray-100 p-4 rounded-lg mb-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
@@ -88,7 +86,7 @@ include 'includes/header.php';
         </div>
     </form>
     
-    <!-- Room Listings -->
+    <!-- Looping rooms -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($rooms as $room): ?>
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -98,7 +96,7 @@ include 'includes/header.php';
                 <p class="text-gray-600">Room #<?= htmlspecialchars($room['room_number']) ?></p>
                 <p class="mt-2"><?= htmlspecialchars($room['description']) ?></p>
                 <div class="mt-4 flex items-center justify-between">
-                    <span class="text-xl font-bold"><?= toRupiah($room['price_per_night']) ?><span class="text-sm font-normal"> / night</span></span>
+                    <span class="text-xl font-bold"><?= formatCurrency($room['price_per_night']) ?><span class="text-sm font-normal"> / night</span></span>
                     <a href="booking.php?room_id=<?= $room['room_id'] ?><?= !empty($check_in) ? '&check_in='.$check_in : '' ?><?= !empty($check_out) ? '&check_out='.$check_out : '' ?>" 
                        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded">
                         Book Now
