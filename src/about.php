@@ -14,19 +14,16 @@ include 'includes/header.php';
             <div class="p-6 md:w-1/2">
                 <h2 class="text-2xl font-semibold mb-4">Welcome to Triton!</h2>
                 <p class="text-gray-700 mb-4">
-                    Didirikan pada tahun 2010, Triton hadir sebagai simbol keanggunan dan ketenangan dalam dunia perhotelan modern. 
-                    Dengan dedikasi terhadap kualitas, perhatian pada setiap detail, dan pelayanan yang dipersonalisasi, 
-                    kami berkomitmen untuk menghadirkan pengalaman menginap yang tak hanya nyaman, tetapi juga berkesan. 
-                    Setiap tamu kami adalah prioritas utama, dan setiap pengalaman menginap adalah cerminan dari standar tinggi yang kami pegang teguh.
+                    Established in 2010, Triton stands as a symbol of elegance and tranquility in the world of modern hospitality. 
+                    With a dedication to quality, meticulous attention to detail, and personalized service, we are committed to delivering a stay that is not only comfortable but also memorable.
+                    Every guest is our top priority, and every stay reflects the high standards we uphold.
                 </p>
                 <p class="text-gray-700 mb-4">
-                    Berlokasi strategis di jantung kota, Triton menawarkan kemudahan akses ke berbagai destinasi penting—mulai dari pusat bisnis, 
-                    area perbelanjaan, hingga tempat wisata ikonik. Baik Anda bepergian untuk urusan bisnis maupun liburan, 
-                    Triton menyediakan akomodasi yang dirancang dengan cermat untuk memenuhi kebutuhan dan gaya hidup Anda.
-                </p>
+                    Strategically located in the heart of the city, Triton offers easy access to key destinations—from business centers and shopping districts to iconic attractions.
+                    Whether you're traveling for business or leisure, Triton provides carefully designed accommodations tailored to your needs and lifestyle.
                 <p class="text-gray-700">
-                    Kami percaya bahwa kenyamanan sejati lahir dari perpaduan suasana yang hangat, desain elegan, dan layanan profesional. 
-                    Di Triton, Anda tidak hanya menginap—Anda merasakan ketenangan, kemewahan, dan kualitas yang dirancang untuk menciptakan pengalaman menginap yang istimewa.
+                    We believe true comfort comes from a blend of warm ambiance, elegant design, and professional service. 
+                    At Triton, you don't just stay—you experience serenity, luxury, and quality crafted to create an exceptional stay
                 </p>
             </div>
         </div>
@@ -77,47 +74,47 @@ include 'includes/header.php';
     </div>
     
     <div class="bg-gray-100 rounded-lg p-8 mb-12">
-        <h2 class="text-3xl font-bold text-center mb-8">Fasilitas yang Tersedia</h2>
+        <h2 class="text-3xl font-bold text-center mb-8">Available Facilities</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Kolam Renang</h3>
-                <p class="text-gray-600 text-sm">Nikmati kolam renang outdoor kami dengan kontrol suhu untuk berenang sepanjang tahun</p>
+                <h3 class="font-semibold mb-2">Swimming Pool</h3>
+                <p class="text-gray-600 text-sm">Enjoy our temperature-controlled outdoor pool for year-round swimming.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
                 <h3 class="font-semibold mb-2">Fitness Center</h3>
-                <p class="text-gray-600 text-sm">Tersedia peralatan canggih dan pelatih profesional</p>
+                <p class="text-gray-600 text-sm">Equipped with state-of-the-art facilities and professional trainers.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Spa & Kesehatan</h3>
-                <p class="text-gray-600 text-sm">Remajakan dirimu dengan rangkaian perawatan spa dan layanan kesehatan kami</p>
+                <h3 class="font-semibold mb-2">Spa & Wellness</h3>
+                <p class="text-gray-600 text-sm">Rejuvenate yourself with our range of spa treatments and wellness services.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Pusat Bisnis</h3>
-                <p class="text-gray-600 text-sm">Fasilitas modern untuk pertemuan dan konferensi dengan dukungan teknis</p>
+                <h3 class="font-semibold mb-2">Business Center</h3>
+                <p class="text-gray-600 text-sm">Modern meeting and conference facilities with technical support.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Restoran & Bar</h3>
-                <p class="text-gray-600 text-sm">Beberapa pilihan bersantap yang menyajikan masakan gourmet dan minuman spesial</p>
+                <h3 class="font-semibold mb-2">Restaurant & Bar</h3>
+                <p class="text-gray-600 text-sm">Multiple dining options serving gourmet cuisine and specialty beverages.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Layanan Concierge</h3>
-                <p class="text-gray-600 text-sm">Bantuan pribadi untuk pengaturan perjalanan dan rekomendasi lokal</p>
+                <h3 class="font-semibold mb-2">Concierge Service</h3>
+                <p class="text-gray-600 text-sm">Personalized assistance for travel arrangements and local recommendations.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Layanan Laundry</h3>
-                <p class="text-gray-600 text-sm">Laundry dan dry cleaning di hari yang sama untuk tamu</p>
+                <h3 class="font-semibold mb-2">Laundry Service</h3>
+                <p class="text-gray-600 text-sm">Same-day laundry and dry cleaning for guests.</p>
             </div>
             
             <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="font-semibold mb-2">Wi-Fi Gratis</h3>
-                <p class="text-gray-600 text-sm">Akses internet berkecepatan tinggi di seluruh properti</p>
+                <h3 class="font-semibold mb-2">Free Wi-Fi</h3>
+                <p class="text-gray-600 text-sm">High-speed internet access throughout the property.</p>
             </div>
         </div>
     </div>
@@ -139,7 +136,7 @@ include 'includes/header.php';
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="assets/images/people/sat.jpg" alt="Team Member" class="w-full h-60 object-cover">
                 <div class="p-4">
-                    <h3 class="font-semibold text-lg">Satria Panca Nugraha</h3>
+                    <h3 class="font-semibold text-lg">Satria Panca Nugroho</h3>
                     <p class="text-gray-600 text-sm">Executive Chef</p>
                     <p class="mt-2 text-sm">Award-winning culinary expert specializing in fusion cuisine</p>
                 </div>
