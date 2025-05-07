@@ -11,8 +11,8 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
                     <ul class="text-gray-400">
-                        <li class="mb-2">Jalan Triton No. 77</li>
-                        <li class="mb-2">Pusat Kota Raya, Jawa Barat 12345</li>
+                        <li class="mb-2">Triton Street No. 77</li>
+                        <li class="mb-2">Central Kota Raya, Jawa Barat 12345</li>
                         <li class="mb-2">Telepon: (0267) 456-7890</li>
                         <li>Email: info@tritonhotel.com</li>
                     </ul>
@@ -23,6 +23,7 @@
                     <ul>
                         <li class="mb-2"><a href="index.php" class="text-gray-400 hover:text-white">Home</a></li>
                         <li class="mb-2"><a href="rooms.php" class="text-gray-400 hover:text-white">Rooms</a></li>
+                        <li class="mb-2"><a href="about.php" class="text-gray-400 hover:text-white">About</a></li>
                         <li><a href="contact.php" class="text-gray-400 hover:text-white">Contact Us</a></li>
                     </ul>
                 </div>
