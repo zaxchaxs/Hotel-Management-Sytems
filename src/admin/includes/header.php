@@ -4,6 +4,7 @@ require_once '../includes/authentication.php';
 
 // Ensure user is logged in and is an admin
 ensureAdmin();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -33,6 +33,9 @@ function ensureAdmin() {
     }
 }
 
+function ensureSuperAdmin() {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+};
 
 function authenticateUser($username_or_email, $password) {
     global $conn;

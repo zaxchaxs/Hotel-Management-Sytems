@@ -94,7 +94,19 @@ include 'includes/header.php';
             </ul>
         </div>
     <?php endif; ?>
-    
+
+    <?php if(!ensureSuperAdmin()) {
+    ?>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6 h-full flex justify-center items-center">
+            <div class="p-4">
+                <h2 class="text-xl font-bold">You dont have permission to access this page</h2>
+            </div>
+        </div>
+    <?php 
+    } else {
+
+    ?>
+
     <?php if (!empty($success_message)): ?>
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
             <p><?= htmlspecialchars($success_message) ?></p>
@@ -233,6 +245,10 @@ include 'includes/header.php';
             </nav>
         </div>
     <?php endif; ?>
+
+    <?php 
+        }
+    ?>
 </div>
 
 <?php include 'includes/footer.php'; ?>
