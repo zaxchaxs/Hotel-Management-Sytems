@@ -125,42 +125,35 @@ include 'includes/header.php';
     <div class="mb-12">
         <h2 class="text-3xl font-bold text-center mb-8">Meet Our Team</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="assets/images/team-1.jpg" alt="Team Member" class="w-full h-48 object-cover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="assets/images/people/irz.jpg" alt="Team Member" class="w-full h-60 object-cover">
                 <div class="p-4">
-                    <h3 class="font-semibold text-lg">Sarah Johnson</h3>
-                    <p class="text-gray-600 text-sm">General Manager</p>
-                    <p class="mt-2 text-sm">15+ years of experience in luxury hospitality management</p>
+                    <h3 class="font-semibold text-lg">Irzi Rahmatullah</h3>
+                    <p class="text-gray-600 text-sm">Head of Housekeeping</p>
+                    <p class="mt-2 text-sm">Ensures immaculate cleanliness and comfort across all rooms</p>
                 </div>
             </div>
-            
+
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="assets/images/team-2.jpg" alt="Team Member" class="w-full h-48 object-cover">
+                <img src="assets/images/people/sat.jpg" alt="Team Member" class="w-full h-60 object-cover">
                 <div class="p-4">
-                    <h3 class="font-semibold text-lg">David Chen</h3>
+                    <h3 class="font-semibold text-lg">Satria Panca Nugraha</h3>
                     <p class="text-gray-600 text-sm">Executive Chef</p>
                     <p class="mt-2 text-sm">Award-winning culinary expert specializing in fusion cuisine</p>
                 </div>
             </div>
             
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="assets/images/team-3.jpg" alt="Team Member" class="w-full h-48 object-cover">
+                <img src="assets/images/people/dina.jpg" alt="Team Member" class="w-full h-60 object-cover">
                 <div class="p-4">
-                    <h3 class="font-semibold text-lg">Maria Rodriguez</h3>
+                    <h3 class="font-semibold text-lg">Pangundian Siagian</h3>
                     <p class="text-gray-600 text-sm">Guest Relations Manager</p>
                     <p class="mt-2 text-sm">Dedicated to ensuring exceptional guest experiences</p>
                 </div>
             </div>
             
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="assets/images/team-4.jpg" alt="Team Member" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg">James Wilson</h3>
-                    <p class="text-gray-600 text-sm">Head of Housekeeping</p>
-                    <p class="mt-2 text-sm">Ensures immaculate cleanliness and comfort across all rooms</p>
-                </div>
-            </div>
         </div>
     </div>
     

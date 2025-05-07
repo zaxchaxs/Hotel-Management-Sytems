@@ -28,7 +28,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="index.php" class="text-xl font-bold text-blue-600">
+                        <a href=<?=ROOT_NAME."index.php"?> class="text-xl font-bold text-blue-600">
                             <?php if (file_exists('assets/images/logo.png')): ?>
                                 <img src="assets/images/logo.png" alt="Hotel Logo" class="h-8 w-auto">
                             <?php else: ?>
